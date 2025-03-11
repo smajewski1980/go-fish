@@ -38,9 +38,23 @@ class Game {
     this.switchCurrentPlayer();
   }
 
+  updateUI() {
+    this.playerOne.hand.forEach((card) => {
+      computersHandDiv.innerHTML += `${
+        card.number > 10 || card.number === 1 ? card.numberText : card.number
+      }&nbsp;${card.suit}&nbsp;&nbsp;&nbsp;`;
+    });
+    this.playerTwo.hand.forEach((card) => {
+      playersHandDiv.innerHTML += `${
+        card.number > 10 || card.number === 1 ? card.numberText : card.number
+      }&nbsp;${card.suit}&nbsp;&nbsp;&nbsp;`;
+    });
+  }
+
   playGame() {
-    this.welcome();
+    // this.welcome();
     this.takeTurn(this.players[currentPlayer]);
+    this.updateUI();
   }
 
   deal() {
