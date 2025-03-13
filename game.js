@@ -26,8 +26,13 @@ class Game {
     confirm(`The computer will be player 1, push ok to start.`);
   }
 
-  takeTurn(player) {
-    // display players hand
+  takeTurn() {
+    let message;
+    currentPlayer === 0 ? (currPlay = "Computer") : (currPlay = "You");
+    displayCurrPlayerElement.innerText = `${currPlay}`;
+    currentPlayer === 0 ? (message = "you") : (message = "Computer");
+    messageDiv.innerText = `Does the ${message} have a ${currentCardChoice}?`;
+    console.log(currentCardChoice);
     // have player select card to ask for
     // if computer player, ask for random card
     // see if that card is in opposite players hand
@@ -40,20 +45,19 @@ class Game {
 
   updateUI() {
     this.playerOne.hand.forEach((card) => {
-      computersHandDiv.innerHTML += `${
+      computersHandDiv.innerHTML += `<p data-card-num='${card.number}'>${
         card.number > 10 || card.number === 1 ? card.numberText : card.number
-      }&nbsp;${card.suit}&nbsp;&nbsp;&nbsp;`;
+      } ${card.suit}</p>`;
     });
     this.playerTwo.hand.forEach((card) => {
-      playersHandDiv.innerHTML += `${
+      playersHandDiv.innerHTML += `<p data-card-num='${card.number}'>${
         card.number > 10 || card.number === 1 ? card.numberText : card.number
-      }&nbsp;${card.suit}&nbsp;&nbsp;&nbsp;`;
+      } ${card.suit}</p>`;
     });
   }
 
   playGame() {
-    // this.welcome();
-    this.takeTurn(this.players[currentPlayer]);
+    // this.takeTurn(this.players[currentPlayer]);
     this.updateUI();
   }
 
@@ -63,18 +67,8 @@ class Game {
       this.playerTwo.hand.push(this.currentDeck.shuffledDeck.pop());
     }
   }
-
-  printCurrentDeck() {
-    console.log(this.currentDeck.shuffledDeck);
-  }
-
-  printHands() {
-    console.log(this.playerOne.hand);
-    console.log(this.playerTwo.hand);
-  }
 }
 
 const currentGame = new Game();
 currentGame.deal();
 currentGame.playGame();
-// currentGame.printHands();

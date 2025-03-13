@@ -1,0 +1,22 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h3 {
+  margin-block: 1rem;
+}
+
+.computers-hand p,
+.players-hand p {
+  cursor: pointer;
+  display: inline;
+  margin-right: 1rem;
+}
+
+.draw-pile span {
+  cursor: pointer;
+}

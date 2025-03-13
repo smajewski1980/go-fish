@@ -7,14 +7,23 @@
     <script src="global.js" defer></script>
     <script src="deck_of_cards.js" defer></script>
     <script src="game.js" defer></script>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <p>the computer's hand</p>
-    <div class="computers-hand"></div>
+    <p class="display-curr-player">Current Player: <span>You</span></p>
+    <h3>the computer's hand</h3>
+    <div data-player='0' class="computers-hand"></div>
   </br>
   </br>
+  <div class="draw-pile">
+    <p>Draw Pile: <span>HERE</span></p>
+  </div>
   </br>
-  <p>your hand</p>
-  <div class="players-hand"></div>
+  </br>
+  <h3>your hand</h3>
+  <div data-player='1' class="players-hand"></div>
+</br>
+</br>
+  <p class="message">choose card to ask for to start</p>
   </body>
 </html>
