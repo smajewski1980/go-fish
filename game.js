@@ -30,8 +30,8 @@ class Game {
     return doThey;
   }
 
-  takeTurn() {
-    let message, currPlay;
+  // will still need adjusting later on, just sets certain words dependent on whose turn it is
+  setTurnVerbiage() {
     if (currentPlayer === 0) {
       currPlay = "Computer";
       message = "Do you";
@@ -39,14 +39,32 @@ class Game {
       currPlay = "You";
       message = "Does the Computer";
     }
+  }
 
-    messageDiv.innerText = `${message} have a ${currentCardChoice}?`;
+  setMessageText(text) {
+    messageDiv.innerText = text;
+  }
+
+  setCurrPlayerElem() {
+    displayCurrPlayerElement.innerText =
+      currentPlayer === 0 ? "Computer" : "You";
+  }
+
+  takeTurn() {
+    // if computers turn, have to make it ask for random card
+
+    this.setTurnVerbiage();
+    this.setMessageText(`${message} have a ${currentCardChoice}?`);
     const oppPlayerHas = this.doesOppPlayerHave(currentCardChoice);
 
     setTimeout(() => {
       oppPlayerHas
-        ? (messageDiv.innerText = `Yes, they have a ${currentCardChoice}. Here You go`)
-        : (messageDiv.innerText = `Sorry, they don't have a ${currentCardChoice}, draw a card.`);
+        ? this.setMessageText(
+            `Yes, they have a ${currentCardChoice}. Here You go`
+          )
+        : this.setMessageText(
+            `Sorry, they don't have a ${currentCardChoice}, draw a card.`
+          );
       if (oppPlayerHas) {
         let xferCard = this.players[oppositePlayer].hand.find((card, idx) => {
           if (card.number === currentCardChoice) {
@@ -55,23 +73,20 @@ class Game {
         });
         this.players[currentPlayer].hand.push(xferCard);
         this.switchCurrentPlayer();
+
         setTimeout(() => {
-          displayCurrPlayerElement.innerText =
-            currentPlayer === 0 ? "Computer" : "You";
-          messageDiv.innerText = "Choose a card to ask for.";
+          this.setCurrPlayerElem();
+          this.setMessageText("Choose a card to ask for.");
         }, 2000);
       } else {
         canDrawCard = true;
       }
+
       setTimeout(() => {
         this.updateUI();
       }, 2000);
     }, 2000);
-    // have player select card to ask for
-    // if computer player, ask for random card
-    // see if that card is in opposite players hand
-    // if not draw from pile
-    // if so, transfer to other players hand
+    // todo's:
     // check for book
     // if book add book
   }
@@ -79,10 +94,13 @@ class Game {
   drawCard() {
     if (canDrawCard) {
       console.log("drawing a card");
-      // need to transfer one card from the deck to the players hand
+
+      let drawCard = this.currentDeck.shuffledDeck.pop();
+      this.players[currentPlayer].hand.push(drawCard);
+
       this.switchCurrentPlayer();
-      displayCurrPlayerElement.innerText =
-        currentPlayer === 0 ? "Computer" : "You";
+      this.setCurrPlayerElem();
+      this.updateUI();
       canDrawCard = false;
       messageDiv.innerText = "Choose a card to ask for.";
     }
@@ -104,7 +122,6 @@ class Game {
   }
 
   playGame() {
-    // this.takeTurn(this.players[currentPlayer]);
     this.updateUI();
   }
 

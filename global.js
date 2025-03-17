@@ -10,6 +10,7 @@ let currentCardChoice = 0;
 let currentPlayer = 1;
 let oppositePlayer = 0;
 let canDrawCard = false;
+let message;
 
 function handleCardChoice(e) {
   // when this is working, there is no need to see or be able to select
