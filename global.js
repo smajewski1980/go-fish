@@ -14,7 +14,8 @@ function handleCardChoice(e) {
   if (e.target.closest("p")) {
     if (
       e.target.closest("p").closest("div").dataset.player ===
-      currentPlayer.toString()
+        currentPlayer.toString() &&
+      !canDrawCard
     ) {
       currentCardChoice = parseInt(e.target.dataset.cardNum);
       currentGame.takeTurn();
