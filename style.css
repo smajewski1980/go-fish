@@ -20,3 +20,8 @@ h3 {
 .draw-pile span {
   cursor: pointer;
 }
+
+.message {
+  font-size: 2rem;
+  font-weight: bold;
+}

@@ -1,7 +1,3 @@
-let currentPlayer = 1;
-let oppositePlayer = 0;
-let canDrawCard = false;
-
 class Game {
   constructor() {
     this.currentDeck = new DeckOfCards();
@@ -21,14 +17,6 @@ class Game {
   switchCurrentPlayer() {
     currentPlayer === 1 ? (currentPlayer = 0) : (currentPlayer = 1);
     oppositePlayer === 0 ? (oppositePlayer = 1) : (oppositePlayer = 0);
-
-    // later this will move to the draw a card func
-    displayCurrPlayerElement.innerText =
-      currentPlayer === 0 ? "Computer" : "You";
-  }
-
-  welcome() {
-    confirm(`The computer will be player 1, push ok to start.`);
   }
 
   doesOppPlayerHave(card) {
@@ -67,10 +55,17 @@ class Game {
         });
         this.players[currentPlayer].hand.push(xferCard);
         this.switchCurrentPlayer();
+        setTimeout(() => {
+          displayCurrPlayerElement.innerText =
+            currentPlayer === 0 ? "Computer" : "You";
+          messageDiv.innerText = "Choose a card to ask for.";
+        }, 2000);
       } else {
         canDrawCard = true;
       }
-      this.updateUI();
+      setTimeout(() => {
+        this.updateUI();
+      }, 2000);
     }, 2000);
     // have player select card to ask for
     // if computer player, ask for random card
@@ -84,10 +79,12 @@ class Game {
   drawCard() {
     if (canDrawCard) {
       console.log("drawing a card");
+      // need to transfer one card from the deck to the players hand
       this.switchCurrentPlayer();
       displayCurrPlayerElement.innerText =
         currentPlayer === 0 ? "Computer" : "You";
       canDrawCard = false;
+      messageDiv.innerText = "Choose a card to ask for.";
     }
   }
 
