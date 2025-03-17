@@ -24,7 +24,7 @@ function handleCardChoice(e) {
 }
 
 function handleDrawPilePick() {
-  console.log("drawing a card");
+  currentGame.drawCard();
 }
 
 computersHandDiv.addEventListener("click", handleCardChoice);

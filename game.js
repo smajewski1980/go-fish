@@ -1,5 +1,6 @@
 let currentPlayer = 1;
 let oppositePlayer = 0;
+let canDrawCard = false;
 
 class Game {
   constructor() {
@@ -20,6 +21,10 @@ class Game {
   switchCurrentPlayer() {
     currentPlayer === 1 ? (currentPlayer = 0) : (currentPlayer = 1);
     oppositePlayer === 0 ? (oppositePlayer = 1) : (oppositePlayer = 0);
+
+    // later this will move to the draw a card func
+    displayCurrPlayerElement.innerText =
+      currentPlayer === 0 ? "Computer" : "You";
   }
 
   welcome() {
@@ -38,16 +43,18 @@ class Game {
   }
 
   takeTurn() {
-    console.log(`currentPlayer is: ${this.players[currentPlayer].name}`);
-    console.log(`opposite Player is: ${this.players[oppositePlayer].name}`);
-    console.log(`current card is: ${currentCardChoice}`);
-    let message;
-    currentPlayer === 0 ? (currPlay = "Computer") : (currPlay = "You");
-    displayCurrPlayerElement.innerText = `${currPlay}`;
-    currentPlayer === 0 ? (message = "you") : (message = "Computer");
-    messageDiv.innerText = `Does the ${message} have a ${currentCardChoice}?`;
-    // console.log(currentCardChoice);
+    let message, currPlay;
+    if (currentPlayer === 0) {
+      currPlay = "Computer";
+      message = "Do you";
+    } else {
+      currPlay = "You";
+      message = "Does the Computer";
+    }
+
+    messageDiv.innerText = `${message} have a ${currentCardChoice}?`;
     const oppPlayerHas = this.doesOppPlayerHave(currentCardChoice);
+
     setTimeout(() => {
       oppPlayerHas
         ? (messageDiv.innerText = `Yes, they have a ${currentCardChoice}. Here You go`)
@@ -59,9 +66,11 @@ class Game {
           }
         });
         this.players[currentPlayer].hand.push(xferCard);
+        this.switchCurrentPlayer();
+      } else {
+        canDrawCard = true;
       }
       this.updateUI();
-      this.switchCurrentPlayer();
     }, 2000);
     // have player select card to ask for
     // if computer player, ask for random card
@@ -70,6 +79,16 @@ class Game {
     // if so, transfer to other players hand
     // check for book
     // if book add book
+  }
+
+  drawCard() {
+    if (canDrawCard) {
+      console.log("drawing a card");
+      this.switchCurrentPlayer();
+      displayCurrPlayerElement.innerText =
+        currentPlayer === 0 ? "Computer" : "You";
+      canDrawCard = false;
+    }
   }
 
   updateUI() {
