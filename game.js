@@ -72,6 +72,9 @@ class Game {
           }
         });
         this.players[currentPlayer].hand.push(xferCard);
+
+        console.log(this.checkHandForBook());
+
         this.switchCurrentPlayer();
 
         setTimeout(() => {
@@ -91,12 +94,43 @@ class Game {
     // if book add book
   }
 
+  checkHandForBook() {
+    let book = false;
+    let handCardCount = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+      6: 0,
+      7: 0,
+      8: 0,
+      9: 0,
+      10: 0,
+      11: 0,
+      12: 0,
+      13: 0,
+    };
+    const hand = this.players[currentPlayer].hand;
+    hand.forEach((card) => {
+      handCardCount[card.number] += 1;
+    });
+    for (let number in handCardCount) {
+      if (handCardCount[number] >= 3) {
+        book = true;
+      }
+    }
+    return book;
+  }
+
   drawCard() {
     if (canDrawCard) {
       console.log("drawing a card");
 
       let drawCard = this.currentDeck.shuffledDeck.pop();
       this.players[currentPlayer].hand.push(drawCard);
+
+      console.log(this.checkHandForBook());
 
       this.switchCurrentPlayer();
       this.setCurrPlayerElem();
