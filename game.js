@@ -76,10 +76,8 @@ class Game {
         console.log(this.checkHandForBook());
         const bookNum = () => this.checkHandForBook();
         if (bookNum) {
-          // console.log(
-          //   `There is a book in ${this.players[currentPlayer].name}'s hand.`
-          // );
           this.removeBookFromHand(bookNum());
+          this.displayBooks();
         }
 
         this.switchCurrentPlayer();
@@ -130,6 +128,8 @@ class Game {
     return bookNumber;
   }
 
+  // todo: this func occasionally leaves a card behind
+  // later also need to handle when the fourth of a book is received
   removeBookFromHand(number) {
     if (!number) return;
     const hand = this.players[currentPlayer].hand;
@@ -145,6 +145,21 @@ class Game {
     console.log(this.players[currentPlayer].books);
   }
 
+  displayBooks() {
+    this.playerOne.books.forEach((item) => {
+      const card = item[0];
+      compBookField.innerHTML += `<p>${
+        card.number > 10 || card.number === 1 ? card.numberText : card.number
+      } ${card.suit}</p>`;
+    });
+    this.playerTwo.books.forEach((item) => {
+      const card = item[0];
+      playerBookField.innerHTML += `<p'>${
+        card.number > 10 || card.number === 1 ? card.numberText : card.number
+      } ${card.suit}</p>`;
+    });
+  }
+  // todo: what if hand is dealt a book
   drawCard() {
     if (canDrawCard) {
       console.log("drawing a card");
@@ -154,6 +169,7 @@ class Game {
 
       console.log(this.checkHandForBook());
       this.removeBookFromHand(this.checkHandForBook());
+      this.displayBooks();
 
       this.switchCurrentPlayer();
       this.setCurrPlayerElem();

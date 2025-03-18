@@ -5,6 +5,10 @@ const drawPile = document.querySelector(".draw-pile span");
 const displayCurrPlayerElement = document.querySelector(
   ".display-curr-player span"
 );
+const booksFields = document.querySelectorAll(".inner-field");
+const compBookField = booksFields[0];
+const playerBookField = booksFields[1];
+
 let currPlay = "You";
 let currentCardChoice = 0;
 let currentPlayer = 1;
