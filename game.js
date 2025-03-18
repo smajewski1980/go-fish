@@ -74,6 +74,13 @@ class Game {
         this.players[currentPlayer].hand.push(xferCard);
 
         console.log(this.checkHandForBook());
+        const bookNum = () => this.checkHandForBook();
+        if (bookNum) {
+          // console.log(
+          //   `There is a book in ${this.players[currentPlayer].name}'s hand.`
+          // );
+          this.removeBookFromHand(bookNum());
+        }
 
         this.switchCurrentPlayer();
 
@@ -95,7 +102,7 @@ class Game {
   }
 
   checkHandForBook() {
-    let book = false;
+    let bookNumber = null;
     let handCardCount = {
       1: 0,
       2: 0,
@@ -117,10 +124,25 @@ class Game {
     });
     for (let number in handCardCount) {
       if (handCardCount[number] >= 3) {
-        book = true;
+        bookNumber = number;
       }
     }
-    return book;
+    return bookNumber;
+  }
+
+  removeBookFromHand(number) {
+    if (!number) return;
+    const hand = this.players[currentPlayer].hand;
+
+    hand.forEach((card, idx) => {
+      if (card.number === parseInt(number)) {
+        const card = hand.splice(idx, 1);
+        this.players[currentPlayer].books.push(card);
+      }
+    });
+
+    this.updateUI();
+    console.log(this.players[currentPlayer].books);
   }
 
   drawCard() {
@@ -131,6 +153,7 @@ class Game {
       this.players[currentPlayer].hand.push(drawCard);
 
       console.log(this.checkHandForBook());
+      this.removeBookFromHand(this.checkHandForBook());
 
       this.switchCurrentPlayer();
       this.setCurrPlayerElem();
