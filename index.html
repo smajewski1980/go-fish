@@ -7,23 +7,28 @@
     <script src="global.js" defer></script>
     <script src="deck_of_cards.js" defer></script>
     <script src="game.js" defer></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <p class="display-curr-player">Current Player: <span>You</span></p>
-    <h3>the computer's hand</h3>
-    <div data-player='0' class="computers-hand"></div>
-  </br>
-  </br>
-  <div class="draw-pile">
-    <p class="draw-pile">draw pile: <span>HERE</span></p>
-  </div>
-  </br>
-  </br>
-  <h3>your hand</h3>
-  <div data-player='1' class="players-hand"></div>
-</br>
-</br>
-  <p class="message">choose card to ask for to start</p>
+    <p class="message">choose card to ask for to start</p>
+    <div class="draw-pile">
+      <p class="draw-pile">draw pile: <span>HERE</span></p>
+    </div>
+    <div class="hands-wrapper">
+      <div class="computers-hand-wrapper">
+        <h2>the computer's hand</h2>
+        <div data-player="0" class="computers-hand"></div>
+      </div>
+      <div class="players-hand-wrapper">
+        <h2>your hand</h2>
+        <div data-player="1" class="players-hand"></div>
+      </div>
+    </div>
+    <fieldset class="books-field">
+      <legend>BOOKS</legend>
+      <fieldset class="inner-field"><legend>Computer</legend></fieldset>
+      <fieldset class="inner-field"><legend>Player</legend></fieldset>
+    </fieldset>
   </body>
 </html>

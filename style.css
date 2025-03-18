@@ -6,7 +6,18 @@
   box-sizing: border-box;
 }
 
-h3 {
+body {
+  text-align: center;
+}
+
+.hands-wrapper {
+  display: flex;
+  width: 75%;
+  justify-content: space-between;
+  margin-inline: auto;
+}
+
+h2 {
   margin-block: 1rem;
 }
 
@@ -15,6 +26,10 @@ h3 {
   cursor: pointer;
   display: inline;
   margin-right: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
 }
 
 .draw-pile span {
@@ -25,4 +40,27 @@ h3 {
 .draw-pile {
   font-size: 2rem;
   font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.books-field {
+  min-height: 250px;
+  width: 90%;
+  margin-inline: auto;
+  display: flex;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.books-field > * {
+  flex: 1;
+}
+
+.books-field legend {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.inner-field {
+  min-height: 200px;
 }
