@@ -53,6 +53,17 @@ function handleDrawPilePick() {
   currentGame.drawCard();
 }
 
+function handleBookCardClick() {
+  // todo: finish this function
+  console.log("you clicked on a book card");
+}
+
+document.addEventListener("click", (e) => {
+  if (e.target.tagName === "P" && e.target.closest("fieldset")) {
+    handleBookCardClick();
+  }
+});
+
 computersHandDiv.addEventListener("click", handleCardChoice);
 playersHandDiv.addEventListener("click", handleCardChoice);
 drawPile.addEventListener("click", handleDrawPilePick);

@@ -152,13 +152,13 @@ class Game {
     playerBookField.innerHTML = "<legend>Player</legend>";
     this.playerOne.books.forEach((item) => {
       const card = item[0];
-      compBookField.innerHTML += `<p>${
+      compBookField.innerHTML += `<p data-card-num='${card.number}'>${
         card.number > 10 || card.number === 1 ? card.numberText : card.number
       } ${card.suit}</p>`;
     });
     this.playerTwo.books.forEach((item) => {
       const card = item[0];
-      playerBookField.innerHTML += `<p'>${
+      playerBookField.innerHTML += `<p data-card-num='${card.number}'>${
         card.number > 10 || card.number === 1 ? card.numberText : card.number
       } ${card.suit}</p>`;
     });

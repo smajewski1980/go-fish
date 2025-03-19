@@ -73,3 +73,7 @@ h2 {
 .inner-field {
   min-height: 200px;
 }
+
+.inner-field p {
+  cursor: pointer;
+}
