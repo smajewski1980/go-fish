@@ -54,16 +54,18 @@ class Game {
     // if computers turn, have to make it ask for random card
 
     this.setTurnVerbiage();
-    this.setMessageText(`${message} have a ${currentCardChoice}?`);
+    this.setMessageText(
+      `${message} have a ${cardDisplayNames[currentCardChoice]}?`
+    );
     const oppPlayerHas = this.doesOppPlayerHave(currentCardChoice);
 
     setTimeout(() => {
       oppPlayerHas
         ? this.setMessageText(
-            `Yes, they have a ${currentCardChoice}. Here You go`
+            `Yes, they have a ${cardDisplayNames[currentCardChoice]}. Here You go`
           )
         : this.setMessageText(
-            `Sorry, they don't have a ${currentCardChoice}, draw a card.`
+            `Sorry, they don't have a ${cardDisplayNames[currentCardChoice]}, draw a card.`
           );
       if (oppPlayerHas) {
         let xferCard = this.players[oppositePlayer].hand.find((card, idx) => {
@@ -85,18 +87,16 @@ class Game {
         setTimeout(() => {
           this.setCurrPlayerElem();
           this.setMessageText("Choose a card to ask for.");
-        }, 2000);
+        }, 1500);
       } else {
         canDrawCard = true;
       }
 
       setTimeout(() => {
         this.updateUI();
-      }, 2000);
-    }, 2000);
+      }, 1500);
+    }, 1500);
     // todo's:
-    // check for book
-    // if book add book
     // handle asking for a number that is in a book
     // handle if 4th of a book is in hand
   }
@@ -130,19 +130,12 @@ class Game {
     return bookNumber;
   }
 
-  // todo: this func occasionally leaves a card behind
+  // todo:
   // later also need to handle when the fourth of a book is received
   // handle exception for empty hand
   removeBookFromHand(number) {
     if (!number) return;
     const hand = this.players[currentPlayer].hand;
-
-    // hand.forEach((card, idx) => {
-    //   if (card.number === parseInt(number)) {
-    //     const card = hand.splice(idx, 1);
-    //     this.players[currentPlayer].books.push(card);
-    //   }
-    // });
 
     for (let i = hand.length - 1; i >= 0; i--) {
       if (hand[i].number === parseInt(number)) {
