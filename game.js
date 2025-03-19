@@ -97,6 +97,8 @@ class Game {
     // todo's:
     // check for book
     // if book add book
+    // handle asking for a number that is in a book
+    // handle if 4th of a book is in hand
   }
 
   checkHandForBook() {
@@ -130,22 +132,32 @@ class Game {
 
   // todo: this func occasionally leaves a card behind
   // later also need to handle when the fourth of a book is received
+  // handle exception for empty hand
   removeBookFromHand(number) {
     if (!number) return;
     const hand = this.players[currentPlayer].hand;
 
-    hand.forEach((card, idx) => {
-      if (card.number === parseInt(number)) {
-        const card = hand.splice(idx, 1);
+    // hand.forEach((card, idx) => {
+    //   if (card.number === parseInt(number)) {
+    //     const card = hand.splice(idx, 1);
+    //     this.players[currentPlayer].books.push(card);
+    //   }
+    // });
+
+    for (let i = hand.length - 1; i >= 0; i--) {
+      if (hand[i].number === parseInt(number)) {
+        const card = hand.splice(i, 1);
         this.players[currentPlayer].books.push(card);
       }
-    });
+    }
 
     this.updateUI();
     console.log(this.players[currentPlayer].books);
   }
 
   displayBooks() {
+    compBookField.innerHTML = "<legend>Computer</legend>";
+    playerBookField.innerHTML = "<legend>Player</legend>";
     this.playerOne.books.forEach((item) => {
       const card = item[0];
       compBookField.innerHTML += `<p>${
