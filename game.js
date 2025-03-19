@@ -51,8 +51,6 @@ class Game {
   }
 
   takeTurn() {
-    // if computers turn, have to make it ask for random card
-
     this.setTurnVerbiage();
     this.setMessageText(
       `${message} have a ${cardDisplayNames[currentCardChoice]}?`
@@ -87,18 +85,22 @@ class Game {
         setTimeout(() => {
           this.setCurrPlayerElem();
           this.setMessageText("Choose a card to ask for.");
-        }, 1500);
+        }, gameFlow);
       } else {
         canDrawCard = true;
       }
 
       setTimeout(() => {
         this.updateUI();
-      }, 1500);
-    }, 1500);
+      }, gameFlow);
+    }, gameFlow);
     // todo's:
     // handle asking for a number that is in a book
     // handle if 4th of a book is in hand
+    // later also need to handle when the fourth of a book is received
+    // handle exception for empty hand
+    // what if hand is dealt a book
+    // if computers turn, have to make it ask for random card
   }
 
   checkHandForBook() {
@@ -130,9 +132,6 @@ class Game {
     return bookNumber;
   }
 
-  // todo:
-  // later also need to handle when the fourth of a book is received
-  // handle exception for empty hand
   removeBookFromHand(number) {
     if (!number) return;
     const hand = this.players[currentPlayer].hand;
@@ -164,7 +163,7 @@ class Game {
       } ${card.suit}</p>`;
     });
   }
-  // todo: what if hand is dealt a book
+
   drawCard() {
     if (canDrawCard) {
       console.log("drawing a card");

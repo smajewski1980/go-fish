@@ -31,6 +31,7 @@ const cardDisplayNames = {
   12: "Queen",
   13: "King",
 };
+const gameFlow = 1000;
 
 function handleCardChoice(e) {
   // when this is working, there is no need to see or be able to select

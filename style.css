@@ -11,6 +11,10 @@ body {
   padding: 1rem;
 }
 
+.display-curr-player {
+  margin-bottom: 1rem;
+}
+
 .hands-wrapper {
   display: flex;
   width: 75%;
@@ -42,6 +46,10 @@ h2 {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 1rem;
+}
+
+.message {
+  font-size: 1.5rem;
 }
 
 .books-field {
