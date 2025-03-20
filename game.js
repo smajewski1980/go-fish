@@ -5,11 +5,13 @@ class Game {
       name: "player one",
       hand: [],
       books: [],
+      bookNums: new Set(),
     };
     this.playerTwo = {
       name: "player two",
       hand: [],
       books: [],
+      bookNums: new Set(),
     };
     this.players = [this.playerOne, this.playerTwo];
   }
@@ -95,11 +97,10 @@ class Game {
       }, gameFlow);
     }, gameFlow);
     // todo's:
-    // handle asking for a number that is in a book
     // handle if 4th of a book is in hand
     // later also need to handle when the fourth of a book is received
     // handle exception for empty hand
-    // what if hand is dealt a book
+    // what if hand is dealt a book at start of game
     // if computers turn, have to make it ask for random card
   }
 
@@ -129,6 +130,7 @@ class Game {
         bookNumber = number;
       }
     }
+
     return bookNumber;
   }
 
@@ -139,12 +141,17 @@ class Game {
     for (let i = hand.length - 1; i >= 0; i--) {
       if (hand[i].number === parseInt(number)) {
         const card = hand.splice(i, 1);
+        const cardNum = card[0].number;
+        console.log(card[0].number);
+        this.players[currentPlayer].bookNums.add(cardNum);
         this.players[currentPlayer].books.push(card);
       }
+      console.log(this.playerOne.bookNums);
+      console.log(this.playerTwo.bookNums);
     }
 
     this.updateUI();
-    console.log(this.players[currentPlayer].books);
+    // console.log(this.players[currentPlayer].books);
   }
 
   displayBooks() {

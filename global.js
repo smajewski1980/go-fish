@@ -53,14 +53,17 @@ function handleDrawPilePick() {
   currentGame.drawCard();
 }
 
-function handleBookCardClick() {
-  // todo: finish this function
-  console.log("you clicked on a book card");
+function handleBookCardClick(e) {
+  const playerBookClicked = e.target.parentElement.dataset.player;
+  if (currentPlayer === parseInt(playerBookClicked)) {
+    currentCardChoice = parseInt(e.target.dataset.cardNum);
+    currentGame.takeTurn();
+  }
 }
 
 document.addEventListener("click", (e) => {
   if (e.target.tagName === "P" && e.target.closest("fieldset")) {
-    handleBookCardClick();
+    handleBookCardClick(e);
   }
 });
 
