@@ -75,7 +75,7 @@ class Game {
         });
         this.players[currentPlayer].hand.push(xferCard);
         this.checkHandForBookCard();
-        console.log(this.checkHandForBook());
+        // console.log(this.checkHandForBook());
         const bookNum = () => this.checkHandForBook();
         if (bookNum) {
           this.removeBookFromHand(bookNum());
@@ -178,14 +178,19 @@ class Game {
     });
   }
 
+  cardsLeftInDeck() {
+    return this.currentDeck.shuffledDeck.length;
+  }
+
   drawCard() {
-    if (canDrawCard) {
-      console.log("drawing a card");
+    console.log(this.cardsLeftInDeck());
+    if (canDrawCard && this.cardsLeftInDeck() > 0) {
+      // console.log("drawing a card");
 
       let drawCard = this.currentDeck.shuffledDeck.pop();
       this.players[currentPlayer].hand.push(drawCard);
 
-      console.log(this.checkHandForBook());
+      // console.log(this.checkHandForBook());
       this.removeBookFromHand(this.checkHandForBook());
       this.checkHandForBookCard();
       this.displayBooks();
@@ -195,7 +200,13 @@ class Game {
       this.updateUI();
       canDrawCard = false;
       messageDiv.innerText = "Choose a card to ask for.";
-    }
+    } else if (canDrawCard && this.cardsLeftInDeck() === 0) {
+      this.endOfGame();
+    } else return;
+  }
+
+  endOfGame() {
+    console.log("now we figure out who won");
   }
 
   updateUI() {
