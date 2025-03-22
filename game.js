@@ -5,13 +5,11 @@ class Game {
       name: "player one",
       hand: [],
       books: [],
-      // bookNums: new Set(),
     };
     this.playerTwo = {
       name: "player two",
       hand: [],
       books: [],
-      // bookNums: new Set(),
     };
     this.players = [this.playerOne, this.playerTwo];
   }
@@ -68,14 +66,22 @@ class Game {
             `Sorry, they don't have a ${cardDisplayNames[currentCardChoice]}, draw a card.`
           );
       if (oppPlayerHas) {
-        let xferCard = this.players[oppositePlayer].hand.find((card, idx) => {
+        let xferCards = [];
+        let xferCardsIndexes = [];
+        let hand = this.players[oppositePlayer].hand;
+        hand.forEach((card, idx) => {
           if (card.number === currentCardChoice) {
-            return this.players[oppositePlayer].hand.splice(idx, 1);
-          }
+            xferCardsIndexes.push(idx);
+          } else return;
         });
-        this.players[currentPlayer].hand.push(xferCard);
-        // this.checkHandForBookCard();
-        // console.log(this.checkHandForBook());
+        xferCardsIndexes.reverse().forEach((idx) => {
+          xferCards.push(hand.splice(idx, 1)[0]);
+        });
+        xferCards.forEach((card) => {
+          this.players[currentPlayer].hand.push(card);
+        });
+        // this.players[currentPlayer].hand.push(xferCards);
+
         const bookNum = () => this.checkHandForBook();
         if (bookNum) {
           this.removeBookFromHand(bookNum());
