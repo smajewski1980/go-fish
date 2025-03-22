@@ -5,13 +5,13 @@ class Game {
       name: "player one",
       hand: [],
       books: [],
-      bookNums: new Set(),
+      // bookNums: new Set(),
     };
     this.playerTwo = {
       name: "player two",
       hand: [],
       books: [],
-      bookNums: new Set(),
+      // bookNums: new Set(),
     };
     this.players = [this.playerOne, this.playerTwo];
   }
@@ -74,7 +74,7 @@ class Game {
           }
         });
         this.players[currentPlayer].hand.push(xferCard);
-        this.checkHandForBookCard();
+        // this.checkHandForBookCard();
         // console.log(this.checkHandForBook());
         const bookNum = () => this.checkHandForBook();
         if (bookNum) {
@@ -100,18 +100,7 @@ class Game {
     // handle exception for empty hand
     // what if hand is dealt a book at start of game
     // if computers turn, have to make it ask for random card
-  }
-
-  checkHandForBookCard() {
-    const player = this.players[currentPlayer];
-    const hand = player.hand;
-    hand.forEach((card, idx) => {
-      if (player.bookNums.has(card.number)) {
-        const xferCard = hand.splice(idx, 1);
-        player.books.push(xferCard);
-        this.displayBooks();
-      }
-    });
+    // finish endOfGame func
   }
 
   checkHandForBook() {
@@ -136,7 +125,7 @@ class Game {
       handCardCount[card.number] += 1;
     });
     for (let number in handCardCount) {
-      if (handCardCount[number] >= 3) {
+      if (handCardCount[number] === 4) {
         bookNumber = number;
       }
     }
@@ -152,7 +141,6 @@ class Game {
       if (hand[i].number === parseInt(number)) {
         const card = hand.splice(i, 1);
         const cardNum = card[0].number;
-        this.players[currentPlayer].bookNums.add(cardNum);
         this.players[currentPlayer].books.push(card);
       }
     }
@@ -192,7 +180,6 @@ class Game {
 
       // console.log(this.checkHandForBook());
       this.removeBookFromHand(this.checkHandForBook());
-      this.checkHandForBookCard();
       this.displayBooks();
 
       this.switchCurrentPlayer();
