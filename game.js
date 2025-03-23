@@ -50,6 +50,10 @@ class Game {
       currentPlayer === 0 ? "Computer" : "You";
   }
 
+  isHandEmpty() {
+    return this.players[currentPlayer].hand.length === 0;
+  }
+
   takeTurn() {
     this.setTurnVerbiage();
     this.setMessageText(
@@ -90,6 +94,17 @@ class Game {
 
         this.switchCurrentPlayer();
 
+        if (this.isHandEmpty() && this.cardsLeftInDeck() === 0) {
+          this.endOfGame();
+          return;
+        }
+        if (this.isHandEmpty()) {
+          console.log("this is after the player switch. the hand is empty");
+          this.setCurrPlayerElem();
+          this.setMessageText("Your hand is empty, draw a card.");
+          return;
+        }
+
         setTimeout(() => {
           this.setCurrPlayerElem();
           this.setMessageText("Choose a card to ask for.");
@@ -103,10 +118,11 @@ class Game {
       }, gameFlow);
     }, gameFlow);
     // todo's:
-    // handle exception for empty hand
+    // handle exception for empty hand******
     // what if hand is dealt a book at start of game
     // if computers turn, have to make it ask for random card
     // finish endOfGame func
+    // *can click quick on another card and change current card choice *BUG
   }
 
   checkHandForBook() {
@@ -178,7 +194,8 @@ class Game {
 
   drawCard() {
     console.log(this.cardsLeftInDeck());
-    if (canDrawCard && this.cardsLeftInDeck() > 0) {
+
+    if (canDrawCard && this.cardsLeftInDeck() >= 1) {
       // console.log("drawing a card");
 
       let drawCard = this.currentDeck.shuffledDeck.pop();
@@ -193,13 +210,34 @@ class Game {
       this.updateUI();
       canDrawCard = false;
       messageDiv.innerText = "Choose a card to ask for.";
-    } else if (canDrawCard && this.cardsLeftInDeck() === 0) {
+      if (this.isHandEmpty()) {
+        this.setCurrPlayerElem();
+        this.setMessageText("Your hand is empty, draw a card.");
+      }
+      if (this.isHandEmpty() && this.currentDeck.shuffledDeck.length === 0) {
+        this.endOfGame();
+        return;
+      }
+    } else if (this.isHandEmpty() && this.cardsLeftInDeck() === 0) {
       this.endOfGame();
+    } else if (this.isHandEmpty()) {
+      console.log("the hand is empty");
+      let drawCard = this.currentDeck.shuffledDeck.pop();
+      this.players[currentPlayer].hand.push(drawCard);
+      this.switchCurrentPlayer();
+      this.setCurrPlayerElem();
+      this.updateUI();
+      canDrawCard = false;
+      messageDiv.innerText = "Choose a card to ask for.";
+      if (this.isHandEmpty()) {
+        this.setMessageText("Your hand is empty, draw a card.");
+      }
     } else return;
   }
 
   endOfGame() {
     console.log("now we figure out who won");
+    messageDiv.innerText = "Game Over";
   }
 
   updateUI() {
@@ -222,7 +260,7 @@ class Game {
   }
 
   deal() {
-    for (let i = 1; i < 6; i++) {
+    for (let i = 1; i < 8; i++) {
       this.playerOne.hand.push(this.currentDeck.shuffledDeck.pop());
       this.playerTwo.hand.push(this.currentDeck.shuffledDeck.pop());
     }

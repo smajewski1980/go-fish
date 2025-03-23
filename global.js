@@ -53,20 +53,6 @@ function handleDrawPilePick() {
   currentGame.drawCard();
 }
 
-// function handleBookCardClick(e) {
-//   const playerBookClicked = e.target.parentElement.dataset.player;
-//   if (currentPlayer === parseInt(playerBookClicked)) {
-//     currentCardChoice = parseInt(e.target.dataset.cardNum);
-//     currentGame.takeTurn();
-//   }
-// }
-
-// document.addEventListener("click", (e) => {
-//   if (e.target.tagName === "P" && e.target.closest("fieldset")) {
-//     handleBookCardClick(e);
-//   }
-// });
-
 computersHandDiv.addEventListener("click", handleCardChoice);
 playersHandDiv.addEventListener("click", handleCardChoice);
 drawPile.addEventListener("click", handleDrawPilePick);
