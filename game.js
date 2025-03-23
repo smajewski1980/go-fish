@@ -5,13 +5,19 @@ class Game {
       name: "player one",
       hand: [],
       books: [],
+      howManyBooks: 0,
     };
     this.playerTwo = {
       name: "player two",
       hand: [],
       books: [],
+      howManyBooks: 0,
     };
     this.players = [this.playerOne, this.playerTwo];
+  }
+
+  getHowManyBooks(player) {
+    return player.howManyBooks;
   }
 
   switchCurrentPlayer() {
@@ -118,7 +124,6 @@ class Game {
       }, gameFlow);
     }, gameFlow);
     // todo's:
-    // handle exception for empty hand******
     // what if hand is dealt a book at start of game
     // if computers turn, have to make it ask for random card
     // finish endOfGame func
@@ -166,7 +171,7 @@ class Game {
         this.players[currentPlayer].books.push(card);
       }
     }
-
+    this.players[currentPlayer].howManyBooks++;
     this.updateUI();
     // console.log(this.players[currentPlayer].books);
   }
@@ -236,8 +241,23 @@ class Game {
   }
 
   endOfGame() {
+    const computerScore = this.getHowManyBooks(this.playerOne);
+    const playerScore = this.getHowManyBooks(this.playerTwo);
+    const winner = () => {
+      if (computerScore > playerScore) {
+        return "computer";
+      } else {
+        return "player";
+      }
+    };
     console.log("now we figure out who won");
-    messageDiv.innerText = "Game Over";
+    messageDiv.innerHTML = `
+        Game Over</br>
+        The Computer Has ${computerScore} books and the player has ${playerScore} books.</br>
+        The ${winner()} is the winner!
+        `;
+    displayCurrPlayerElement.parentElement.remove();
+    drawPile.parentElement.remove();
   }
 
   updateUI() {
@@ -260,7 +280,7 @@ class Game {
   }
 
   deal() {
-    for (let i = 1; i < 8; i++) {
+    for (let i = 1; i < 25; i++) {
       this.playerOne.hand.push(this.currentDeck.shuffledDeck.pop());
       this.playerTwo.hand.push(this.currentDeck.shuffledDeck.pop());
     }
