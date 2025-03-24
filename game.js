@@ -16,6 +16,14 @@ class Game {
     this.players = [this.playerOne, this.playerTwo];
   }
 
+  computersCardChoice() {
+    const randomNum = Math.floor(
+      Math.random() * (this.playerOne.hand.length - 1)
+    );
+    const cardNum = this.playerOne.hand[randomNum];
+    return cardNum.number;
+  }
+
   getHowManyBooks(player) {
     return player.howManyBooks;
   }
@@ -124,9 +132,7 @@ class Game {
       }, gameFlow);
     }, gameFlow);
     // todo's:
-    // what if hand is dealt a book at start of game
     // if computers turn, have to make it ask for random card
-    // finish endOfGame func
     // *can click quick on another card and change current card choice *BUG
   }
 
